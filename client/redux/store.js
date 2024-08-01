@@ -18,6 +18,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 
+
 //Updated Redux store
 export const store = configureStore({
     
