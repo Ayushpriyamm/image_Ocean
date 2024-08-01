@@ -13,7 +13,6 @@ const persistConfig = {
     version: 1,
 
 };
-
 //convert reducer to persisted reducer
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
