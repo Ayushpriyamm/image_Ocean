@@ -17,8 +17,6 @@ const persistConfig = {
 //convert reducer to persisted reducer
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-
-
 //Updated Redux store
 export const store = configureStore({
     
