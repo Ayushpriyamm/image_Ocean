@@ -27,7 +27,7 @@ export const Header = () => {
       <div className="flex justify-between items-center max-w-6xl mx-auto p-3 ">
         <Link to="/">
           <h1 className="text-slate-100 font-bold text-xl">
-            Image<span className="text-[#008170] ">Ocean</span>
+            Image<span className="text-[#20c0ab] ">Ocean</span>
           </h1>
         </Link>
         <form
