@@ -1,18 +1,26 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 
 export const Header = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-
-  //handle change in serach box
-  const handleChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
+  console.log(searchTerm);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const urlparams = new URLSearchParams(window.location.search);
+    urlparams.set("searchTerm", searchTerm);
+    const serachQuery = urlparams.toString();
+    navigate(`/explore?${serachQuery}`);
   };
+  useEffect(() => {
+    const urlparams = new URLSearchParams(location.search);
+    const searchTermFromURL = urlparams.get("searchTerm");
+    if (searchTermFromURL) {
+      setSearchTerm(searchTermFromURL);
+    }
+  }, [location.search]);
 
   return (
     <header className=" bg-[#1A1A1A] shadow-lg  ">
@@ -27,11 +35,11 @@ export const Header = () => {
           onSubmit={handleSubmit}
         >
           <input
-            onChange={handleChange}
             type="text"
             placeholder="search..."
             value={searchTerm}
             className=" bg-transparent focus:outline-none w-24 sm:w-64"
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
           <button type="submit">
             <FaSearch />
