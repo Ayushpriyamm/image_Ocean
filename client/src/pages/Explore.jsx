@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { ImageItem } from "../components/ImageItem";
 
+const API_KEY = import.meta.env.VITE_API_KEY;
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 export const Explore = () => {
   const [images, setImages] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -20,8 +23,7 @@ export const Explore = () => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const API_KEY = "45185638-2fe2246e844b833a2a1fe44be";
-        const url = `https://pixabay.com/api/?key=${API_KEY}&q=${encodeURIComponent(
+        const url = `${BASE_URL}?key=${API_KEY}&q=${encodeURIComponent(
           searchTerm
         )}&per_page=50`;
 
@@ -39,8 +41,6 @@ export const Explore = () => {
     fetchImages();
   }, [searchTerm]);
 
-  const headText = `Access ${totalImages} Free ${searchTerm} Images and Photos`;
-
   return (
     <div className="p-2 md:p-4">
       <div className="flex text-center justify-center p-2 md:p-4">
@@ -56,11 +56,7 @@ export const Explore = () => {
       </div>
       <div className="flex flex-wrap justify-center gap-4 md:gap-6 p-2 md:p-4">
         {images.map((image) => (
-          <ImageItem
-            key={image.id}
-            image={image.webformatURL}
-            text={image.tags}
-          />
+          <ImageItem key={image.id} img={image} />
         ))}
       </div>
     </div>

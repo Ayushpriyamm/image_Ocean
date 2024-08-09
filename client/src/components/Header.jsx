@@ -14,6 +14,7 @@ export const Header = () => {
     const serachQuery = urlparams.toString();
     navigate(`/explore?${serachQuery}`);
   };
+
   useEffect(() => {
     const urlparams = new URLSearchParams(location.search);
     const searchTermFromURL = urlparams.get("searchTerm");
@@ -39,6 +40,8 @@ export const Header = () => {
             placeholder="search..."
             value={searchTerm}
             className=" bg-transparent focus:outline-none w-24 sm:w-64"
+            id="search"
+            name="search"
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <button type="submit">

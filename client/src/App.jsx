@@ -8,6 +8,8 @@ import { Explore } from "./pages/Explore";
 import { Signup } from "./pages/Signup";
 import { Login } from "./pages/Login";
 
+import { ImagePage } from "./pages/ImagePage";
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -19,6 +21,7 @@ const App = () => {
         <Route path="/explore" element={<Explore />} />
         <Route path="/signin" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/image/:imageId" element={<ImagePage />} />
       </Routes>
     </BrowserRouter>
   );
