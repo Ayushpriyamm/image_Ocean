@@ -1,15 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { ImageItem } from "../components/ImageItem";
+import { Loader } from "../components/Loader";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const Explore = () => {
   const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [totalImages, setTotalImages] = useState(0);
   const location = useLocation();
+
+  useEffect(() => {
+    // Simulate an API call
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+  }, []);
 
   useEffect(() => {
     const urlparams = new URLSearchParams(location.search);
@@ -23,6 +33,7 @@ export const Explore = () => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
+        setLoading(true);
         const url = `${BASE_URL}?key=${API_KEY}&q=${encodeURIComponent(
           searchTerm
         )}&per_page=50`;
@@ -33,13 +44,19 @@ export const Explore = () => {
 
         console.log(data.total);
         setTotalImages(data.total);
+        setLoading(false);
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     };
 
     fetchImages();
   }, [searchTerm]);
+
+  if (loading || isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="p-2 md:p-4">
