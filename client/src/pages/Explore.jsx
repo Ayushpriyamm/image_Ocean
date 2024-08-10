@@ -42,7 +42,6 @@ export const Explore = () => {
         const data = await response.json();
         setImages(data.hits);
 
-        console.log(data.total);
         setTotalImages(data.total);
         setLoading(false);
       } catch (error) {
@@ -59,19 +58,18 @@ export const Explore = () => {
   }
 
   return (
-    <div className="p-2 md:p-4">
-      <div className="flex text-center justify-center p-2 md:p-4">
-        <h1 className="text-2xl md:text-5xl text-center p-2 md:p-5">
+    <div className="flex flex-col justify-center space-y-4">
+      <div className="flex justify-center p-4 text-center">
+        <h1 className="text-2xl md:text-5xl">
           Access{" "}
           <span className="text-[#20c0ab] font-bold">{totalImages}+</span> Free{" "}
           <span className="text-[#20c0ab] font-semibold">
-            {" "}
             {searchTerm.charAt(0).toUpperCase() + searchTerm.slice(1)}
           </span>{" "}
           Images and Photos
         </h1>
       </div>
-      <div className="flex flex-wrap justify-center gap-4 md:gap-6 p-2 md:p-4">
+      <div className="flex flex-col md:flex-row flex-wrap justify-center mx-auto space-y-4 md:space-x-4">
         {images.map((image) => (
           <ImageItem key={image.id} img={image} />
         ))}
