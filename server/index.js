@@ -13,19 +13,11 @@ const app = express();
 
 app.use(cors({
     origin: "https://imageocean.vercel.app/",
-    credentials:true
+    methods: ["GET", "POST", "DELETE", "PUT"],
+    credentials: true  
 }));
 
 const key = process.env.PIXABAY_API_KEY;
-
-
-mongoose.connect(process.env.MONGO).then(() => {
-    console.log("connected to database")
-}).catch((err) => {
-    console.log(err);
-})
-
-
 
 //const __dirname = path.resolve();
 
@@ -57,5 +49,11 @@ app.use((err, req, res, next) => {
         statuscode,
         message
     })
+})
+
+mongoose.connect(process.env.MONGO).then(() => {
+    console.log("connected to database")
+}).catch((err) => {
+    console.log(err);
 })
 
