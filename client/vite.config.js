@@ -7,7 +7,9 @@ export default defineConfig({
     proxy: {
       '/server': {
         target: 'https://image-ocean.onrender.com/',
-        secure:false,
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/server/, ''),
+        
       },
     },
   },
