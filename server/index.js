@@ -10,14 +10,22 @@ import path from 'path';
 dotenv.config()
 
 const app = express();
+
+app.use(cors({
+    origin: "https://imageocean.vercel.app/",
+    credentials:true
+}));
+
 const key = process.env.PIXABAY_API_KEY;
-console.log("PIXABAY_API_KEY:", key);
+
 
 mongoose.connect(process.env.MONGO).then(() => {
     console.log("connected to database")
 }).catch((err) => {
     console.log(err);
 })
+
+
 
 //const __dirname = path.resolve();
 
@@ -29,10 +37,7 @@ app.use(express.json());
 
 app.use(cookieParser());
 
-app.use(cors({
-    origin: "https://imageocean.vercel.app/",
-    credentials:true
-}));
+
 
 app.use('/server/auth', userRouter)
 app.use('/server/images', imageRouter);
