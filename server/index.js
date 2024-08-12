@@ -19,7 +19,7 @@ mongoose.connect(process.env.MONGO).then(() => {
     console.log(err);
 })
 
-const __dirname = path.resolve();
+//const __dirname = path.resolve();
 
 app.listen(3000, () => {
     console.log("server is running on port 3000!!!")
@@ -29,16 +29,19 @@ app.use(express.json());
 
 app.use(cookieParser());
 
-app.use(cors());
+app.use(cors({
+    origin: "https://imageocean.vercel.app/",
+    credentials:true
+}));
 
 app.use('/server/auth', userRouter)
 app.use('/server/images', imageRouter);
 
-app.use(express.static(path.join(__dirname, '/client/dist')));
+// app.use(express.static(path.join(__dirname, '/client/dist')));
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
-})
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+// })
 
 
 app.use((err, req, res, next) => {

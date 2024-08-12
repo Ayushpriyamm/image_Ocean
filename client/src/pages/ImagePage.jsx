@@ -12,8 +12,8 @@ export const ImagePage = () => {
   const [loading, setLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [imageLoaded, setImageLoaded] = useState(false);
+
   useEffect(() => {
-    // Simulate an API call
     setTimeout(() => {
       setIsLoading(false);
     }, 1000);
@@ -45,6 +45,21 @@ export const ImagePage = () => {
     setImageLoaded(true);
   };
 
+  const downloadImage = async (url, filename) => {
+    try {
+      const response = await fetch(url);
+      const blob = await response.blob();
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Error downloading the image:", error);
+    }
+  };
+
   if (loading || isLoading) {
     return <Loader />;
   }
@@ -54,7 +69,7 @@ export const ImagePage = () => {
       <h1 className="text-2xl font-bold mb-4">{image.tags}</h1>
       {!imageLoaded && <ImageSkeleton />}
       <img
-        className={`rounded-lg shadow-lg max-w-full ${
+        className={`rounded-lg shadow-lg max-w-full max-h-[300px] object-contain ${
           imageLoaded ? `block` : `hidden`
         }`}
         src={image.largeImageURL}
@@ -65,6 +80,43 @@ export const ImagePage = () => {
       <p>Downloads: {image.downloads}</p>
       <p>Likes: {image.likes}</p>
       <p>User: {image.user}</p>
+
+      {/* Download buttons */}
+      <div className="flex space-x-2 mt-4">
+        <button
+          onClick={() =>
+            downloadImage(
+              image.webformatURL,
+              `image-${params.imageId}-small.jpg`
+            )
+          }
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+        >
+          Small
+        </button>
+        <button
+          onClick={() =>
+            downloadImage(
+              image.largeImageURL,
+              `image-${params.imageId}-large.jpg`
+            )
+          }
+          className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+        >
+          Large
+        </button>
+        <button
+          onClick={() =>
+            downloadImage(
+              image.fullHDURL || image.largeImageURL,
+              `image-${params.imageId}-fullhd.jpg`
+            )
+          }
+          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+        >
+          Full HD
+        </button>
+      </div>
     </div>
   );
 };
