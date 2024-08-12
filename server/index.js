@@ -14,7 +14,7 @@ const app = express();
 
 
 app.use(cors({
-    origin: "https://imageocean.vercel.app", // Adjusted to match Vercel domain without trailing slash
+    origin: ["https://imageocean.vercel.app","http://localhost:5173"], // Adjusted to match Vercel domain without trailing slash
     methods: ["GET", "POST", "DELETE", "PUT"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
