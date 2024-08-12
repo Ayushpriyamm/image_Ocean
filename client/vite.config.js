@@ -6,10 +6,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/server': {
-        target: 'https://image-ocean.onrender.com',
-        changeOrigin: true,
-       
-        
+        target: 'https://image-ocean.onrender.com/server',
+        changeOrigin: true, 
       },
     },
   },
