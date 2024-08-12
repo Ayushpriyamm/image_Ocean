@@ -29,16 +29,13 @@ export const Login = () => {
 
     try {
       dispatch(signInStart());
-      const res = await fetch(
-        "https://image-ocean.onrender.com/server/auth/signin",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const res = await fetch("/server/auth/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
       const data = await res.json();
 
       if (data.success === false) {
