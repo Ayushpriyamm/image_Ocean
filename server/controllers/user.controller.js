@@ -17,15 +17,10 @@ export const signup = async (req, res,next) => {
     // Check if all required fields are provided
     if (!username || !email || !password) {
          return next(errorHandler(400, 'Username, email, and password are required'));
-    }
-    
+    } 
     const hashedPassword = bcryptjs.hashSync(password, 10);
 
     const newUser = new User({ username, email, password: hashedPassword });
-    
-    
-
-    
         await newUser.save();
         res.status(201).json("user created successfully")
     } catch (error) {
