@@ -26,19 +26,17 @@ export const Login = () => {
   //handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const server = "https://image-ocean.onrender.com";
     try {
       dispatch(signInStart());
-      const res = await fetch(
-        "https://image-ocean.onrender.com/server/auth/signin",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const res = await fetch(`${server}/server/auth/signin`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(formData),
+      });
       console.log(res);
       const data = await res.json();
 
