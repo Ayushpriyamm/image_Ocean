@@ -23,8 +23,8 @@ export const Hero = () => {
           </div>
         </div>
 
-        <div className="w-full md:w-1/2 grid grid-cols-2 gap-4 p-4 ">
-          <div className="h-44 md:h-52 text-center relative border-8 border-white">
+        <div className="w-full md:w-1/2 grid grid-cols-2 gap-4 p-4 mx-auto ">
+          <div className="h-52 text-center relative border-8 border-white">
             <div className="absolute top-0 right-0 bg-white opacity-30 rounded-xl h-44 w-3/4"></div>
             <div className="absolute bottom-0 left-0 bg-white opacity-30 rounded-full h-20  w-20">
               01
