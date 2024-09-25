@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { ImageItem } from "../components/ImageItem";
 import { Loader } from "../components/Loader";
+import { Paging } from "../components/Paging";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -9,17 +10,9 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 export const Explore = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [totalImages, setTotalImages] = useState(0);
   const location = useLocation();
-
-  useEffect(() => {
-    // Simulate an API call
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
-  }, []);
 
   useEffect(() => {
     const urlparams = new URLSearchParams(location.search);
@@ -36,14 +29,13 @@ export const Explore = () => {
         setLoading(true);
         const url = `${BASE_URL}?key=${API_KEY}&q=${encodeURIComponent(
           searchTerm
-        )}&per_page=50`;
+        )}&per_page=20`;
 
         const response = await fetch(url);
         const data = await response.json();
         setImages(data.hits);
 
         setTotalImages(data.total);
-        setLoading(false);
       } catch (error) {
         console.log(error);
         setLoading(false);
@@ -51,9 +43,10 @@ export const Explore = () => {
     };
 
     fetchImages();
+    setLoading(false);
   }, [searchTerm]);
 
-  if (loading || isLoading) {
+  if (loading) {
     return <Loader />;
   }
 
@@ -74,6 +67,7 @@ export const Explore = () => {
           <ImageItem key={image.id} img={image} />
         ))}
       </div>
+      <Paging totalImages={totalImages} imgPerPost={20} />
     </div>
   );
 };
