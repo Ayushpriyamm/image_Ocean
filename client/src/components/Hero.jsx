@@ -1,12 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SearchBar } from "./SearchBar";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-const searchTerm = "dogs";
-
 export const Hero = () => {
+  const [images, setImages] = useState([]);
+
+  // Fetch images from the API when the component mounts
+  useEffect(() => {
+    const searchTerm = "dogs"; // Replace with desired default search term
+    const url = `${BASE_URL}?key=${API_KEY}&q=${encodeURIComponent(
+      searchTerm
+    )}`;
+
+    // Fetch data from the API
+    const fetchImages = async () => {
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        // Check if the response contains valid data
+        if (data && data.hits) {
+          setImages(data.hits.slice(0, 4)); // Set the first 4 images for display
+        }
+      } catch (error) {
+        console.error("Error fetching images:", error);
+      }
+    };
+
+    fetchImages();
+  }, []);
+
+  console.log(images);
   return (
     <div>
       <div className="flex flex-col md:flex-row justify-center space-x-6 space-y-6 p-4 items-center h-screen">

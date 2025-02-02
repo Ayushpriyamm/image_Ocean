@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { ImageItem } from "../components/ImageItem";
 import { Loader } from "../components/Loader";
-import { Paging } from "../components/Paging";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -67,7 +66,6 @@ export const Explore = () => {
           <ImageItem key={image.id} img={image} />
         ))}
       </div>
-      <Paging totalImages={totalImages} imgPerPost={20} />
     </div>
   );
 };

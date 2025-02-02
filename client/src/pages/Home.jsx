@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Loader } from "../components/Loader";
 import { Box } from "../components/Box";
 import { Hero } from "../components/Hero";
+import { HomeComp2 } from "../components/HomeComp2";
 export const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -26,6 +27,9 @@ export const Home = () => {
 
     <div className="">
       <Hero></Hero>
+
+      {/* */}
+      <HomeComp2></HomeComp2>
     </div>
   );
 };
