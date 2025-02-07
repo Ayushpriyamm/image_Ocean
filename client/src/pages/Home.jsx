@@ -4,6 +4,7 @@ import { Loader } from "../components/Loader";
 import { Box } from "../components/Box";
 import { Hero } from "../components/Hero";
 import { HomeComp2 } from "../components/HomeComp2";
+import { HomeComp3 } from "../components/HomeComp3";
 export const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -30,6 +31,8 @@ export const Home = () => {
 
       {/* */}
       <HomeComp2></HomeComp2>
+
+      <HomeComp3 />
     </div>
   );
 };
