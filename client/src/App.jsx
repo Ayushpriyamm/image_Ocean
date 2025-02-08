@@ -9,6 +9,7 @@ import { Signup } from "./pages/Signup";
 import { Login } from "./pages/Login";
 
 import { ImagePage } from "./pages/ImagePage";
+import { Footer } from "./components/Footer";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/image/:imageId" element={<ImagePage />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 };
