@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-
+import { useNavigate, useLocation, Link } from "react-router-dom";
+import { Loader } from "./Loader";
 const API_KEY = import.meta.env.VITE_API_KEY;
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -23,6 +23,14 @@ export const HomeComp2 = () => {
     "fitness",
     "wildlife",
     "architecture",
+    "boxing",
+    "paintings",
+    "animation",
+    "Ai",
+    "robots",
+    "animals",
+    "cartoons",
+    "mountains",
   ];
 
   useEffect(() => {
@@ -75,34 +83,46 @@ export const HomeComp2 = () => {
   }, [location.search]);
 
   return (
-    <div className="flex flex-col justify-center p-4 space-y-8">
+    <div className="relative flex flex-col justify-center p-4 space-y-8">
       <h1 className="text-2xl text-center">
         Over 5.3 million+ high-quality stock images, shared by our talented
         community
       </h1>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 justify-center">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 justify-center">
         {topics.map((topic, index) => (
           <div
             key={index}
-            className="relative bg-slate-300 cursor-pointer rounded"
+            className="relative bg-slate-300 cursor-pointer rounded-lg overflow-hidden group border-1 border-[#20c0ab]"
             onClick={() => handleTopicClick(topic)}
           >
             {images[topic] ? (
               <img
                 src={images[topic]}
                 alt={topic}
-                className="w-full h-40 object-cover rounded"
+                className="w-full h-full object-cover rounded-lg"
               />
             ) : (
               <div className="flex items-center justify-center w-full h-40">
-                Loading...
+                <Loader />
               </div>
             )}
-            <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white text-center py-1">
-              {topic.toUpperCase()}
+
+            {/* Overlay for Hover Effect */}
+            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <span className="text-white text-xl font-bold">
+                {topic.toUpperCase()}
+              </span>
             </div>
           </div>
         ))}
+      </div>
+      <div class="flex items-center absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-white/90 to-transparent mask mask-linear p-20">
+        <Link
+          to="/explore"
+          className="bg-transparent border-2 border-black rounded-full p-2 text-lg mx-auto text-black "
+        >
+          Discover more
+        </Link>
       </div>
     </div>
   );
