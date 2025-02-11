@@ -28,7 +28,7 @@ export const Explore = () => {
         setLoading(true);
         const url = `${BASE_URL}?key=${API_KEY}&q=${encodeURIComponent(
           searchTerm
-        )}&per_page=20`;
+        )}&per_page=200`;
 
         const response = await fetch(url);
         const data = await response.json();
