@@ -6,17 +6,6 @@ import { Hero } from "../components/Hero";
 import { HomeComp2 } from "../components/HomeComp2";
 import { HomeComp3 } from "../components/HomeComp3";
 export const Home = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    // Simulate an API call
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
-  }, []);
-
-  if (isLoading) {
-    return <Loader />;
-  }
   return (
     // <div className="min-h-screen flex justify-center items-center">
     //   <Link className="flex justify-center items-center" to="/explore">

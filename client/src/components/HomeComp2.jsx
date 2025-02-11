@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { Loader } from "./Loader";
+import { ImageSkeleton } from "./ImageSkeleton";
 const API_KEY = import.meta.env.VITE_API_KEY;
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -103,7 +104,7 @@ export const HomeComp2 = () => {
               />
             ) : (
               <div className="flex items-center justify-center w-full h-40">
-                <Loader />
+                <ImageSkeleton />
               </div>
             )}
 

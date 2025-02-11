@@ -3,7 +3,7 @@ import React from "react";
 export const HomeComp3 = () => {
   return (
     <>
-      <div className="flex flex-col md:flex-row justify-center p-4 ">
+      <div className="flex flex-col md:flex-row justify-center px-4 py-6 ">
         <div className="flex flex-col md:space-y-6">
           <h1 className="text-2xl md:text-3xl font-semibold text-center">
             💙 Free media you can use anywhere
