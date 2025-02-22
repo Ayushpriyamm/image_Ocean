@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 export const ImageItem = ({ img }) => {
   return (
     <Link to={`/image/${img.id}`} className="block">
-      <div className="rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl hover:shadow-2xl">
+      <div className=" rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl hover:shadow-2xl">
         <div className="relative group">
           {/* Add 'group' to enable group-hover */}
           <img
-            className="object-cover w-full h-40 sm:h-48 md:h-56 lg:h-64 xl:h-72 group-hover:opacity-90"
+            className="object-cover  w-full sm:h-48 md:h-56 lg:h-64 xl:h-72 group-hover:opacity-90"
             src={img.webformatURL}
             alt={img.tag}
             loading="lazy"

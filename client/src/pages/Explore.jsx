@@ -50,7 +50,7 @@ export const Explore = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center space-y-4">
+    <div className="flex flex-col justify-center space-y-4 p-4">
       <div className="flex justify-center p-4 text-center">
         <h1 className="text-2xl md:text-5xl">
           Access{" "}
@@ -61,7 +61,7 @@ export const Explore = () => {
           Images and Photos
         </h1>
       </div>
-      <div className="flex flex-col md:flex-row flex-wrap justify-center mx-auto space-y-4 md:space-x-4">
+      <div className="grid gird-cols-1 md:grid-cols-4  mx-auto space-y-4 md:space-x-2">
         {images.map((image) => (
           <ImageItem key={image.id} img={image} />
         ))}
