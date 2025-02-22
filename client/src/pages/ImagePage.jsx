@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Loader } from "../components/Loader";
 import { ImageSkeleton } from "../components/ImageSkeleton";
+import { FaEye, FaCloudDownloadAlt, FaHeart } from "react-icons/fa";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -30,6 +31,7 @@ export const ImagePage = () => {
 
         if (data.hits.length > 0) {
           setImage(data.hits[0]);
+
           setLoading(false);
         }
       } catch (error) {
@@ -40,6 +42,8 @@ export const ImagePage = () => {
 
     fetchImage();
   }, [params]);
+
+  console.log(image);
 
   const handleLoadImage = () => {
     setImageLoaded(true);
@@ -65,58 +69,98 @@ export const ImagePage = () => {
   }
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">{image.tags}</h1>
-      {!imageLoaded && <ImageSkeleton />}
-      <img
-        className={`rounded-lg shadow-lg max-w-full max-h-[300px] object-contain ${
-          imageLoaded ? `block` : `hidden`
-        }`}
-        src={image.largeImageURL}
-        alt={image.tags}
-        onLoad={handleLoadImage}
-      />
-      <p className="mt-4">Views: {image.views}</p>
-      <p>Downloads: {image.downloads}</p>
-      <p>Likes: {image.likes}</p>
-      <p>User: {image.user}</p>
+    <>
+      <div className="flex flex-col md:flex-row p-4 gap-4 items-center">
+        {!imageLoaded && <ImageSkeleton />}
 
-      {/* Download buttons */}
-      <div className="flex space-x-2 mt-4">
-        <button
-          onClick={() =>
-            downloadImage(
-              image.webformatURL,
-              `image-${params.imageId}-small.jpg`
-            )
-          }
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-        >
-          Small
-        </button>
-        <button
-          onClick={() =>
-            downloadImage(
-              image.largeImageURL,
-              `image-${params.imageId}-large.jpg`
-            )
-          }
-          className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
-        >
-          Large
-        </button>
-        <button
-          onClick={() =>
-            downloadImage(
-              image.fullHDURL || image.largeImageURL,
-              `image-${params.imageId}-fullhd.jpg`
-            )
-          }
-          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-        >
-          Full HD
-        </button>
+        <div className="flex flex-col image-div w-full md:w-1/2 justify-center  ">
+          <img
+            className={`rounded-lg shadow-lg object-contain mx-auto ${
+              imageLoaded ? `block` : `hidden`
+            }`}
+            src={image.webformatURL}
+            alt={image.tags}
+            onLoad={handleLoadImage}
+          />
+        </div>
+
+        <div className="info-div flex flex-col w-full md:w-1/2 space-y-4">
+          {/* Download buttons */}
+          <div className="flex flex-col space-y-4  items-center">
+            <button
+              onClick={() =>
+                downloadImage(
+                  image.webformatURL,
+                  `image-${params.imageId}-small.jpg`
+                )
+              }
+              className="w-full md:w-3/4 p-3  bg-[#20c0ab] text-black hover:text-white rounded-lg hover:bg-[#116257]  transition-colors font-medium"
+            >
+              Download Small
+            </button>
+            <button
+              onClick={() =>
+                downloadImage(
+                  image.largeImageURL,
+                  `image-${params.imageId}-large.jpg`
+                )
+              }
+              className="w-full md:w-3/4 px-4 py-2 bg-white text-black rounded-lg hover:bg-[#d8dede] transition-colors font-medium"
+            >
+              Download Large
+            </button>
+            <button
+              onClick={() =>
+                downloadImage(
+                  image.fullHDURL || image.largeImageURL,
+                  `image-${params.imageId}-fullhd.jpg`
+                )
+              }
+              className="w-full md:w-3/4 px-4 py-2 bg-[#20c0ab] text-black hover:text-white rounded-lg hover:bg-[#116257] transition-colors font-medium"
+            >
+              Download Full HD
+            </button>
+          </div>
+
+          <div className="info flex md:flex-row gap-4 md:gap-8 justify-center">
+            <div className="flex gap-2 items-center p-2">
+              <FaEye className="w-[40px] h-[40px]" />
+              <p className="">{image.views}</p>
+            </div>
+            <div className="flex gap-2 items-center p-2">
+              <FaCloudDownloadAlt className="w-[40px] h-[40px]" />
+              <p className="">{image.downloads}</p>
+            </div>
+            <div className="flex gap-2 items-center p-2">
+              <FaHeart className="w-[40px] h-[40px]" />
+              <p className="">{image.likes}</p>
+            </div>
+          </div>
+
+          <div className="details flex flex-col text-center text-lg space-y-2">
+            <p>Media type : {image.type}</p>
+            <p>
+              Image tags :{" [ "}
+              <span>{image.tags}</span>
+              {" ]"}
+            </p>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
+
+    // <>
+    //   <div className="flex md:flex-row flex-col">
+    //     <div className="image-div">
+    //       <img {image.largeImageURL} alt="" onLoad={handleLoadImage}/>
+    //     </div>
+
+    //     <div className="links-div">
+    //       <div className="buttons"></div>
+
+    //       <div className="info-div"></div>
+    //     </div>
+    //   </div>
+    // </>
   );
 };
