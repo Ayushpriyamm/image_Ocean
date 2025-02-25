@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-import { Loader } from "./Loader";
 import { ImageSkeleton } from "./ImageSkeleton";
 const API_KEY = import.meta.env.VITE_API_KEY;
 const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -35,34 +34,23 @@ export const HomeComp2 = () => {
   ];
 
   useEffect(() => {
+    const fetchImage = async (topic) => {
+      const url = `${BASE_URL}?key=${API_KEY}&q=${encodeURIComponent(
+        topic
+      )}&image_type=photo`;
+      const response = await fetch(url);
+      const data = await response.json();
+      return [topic, data.hits?.[0]?.webformatURL || "/fallback.jpg"];
+    };
+
     const fetchImages = async () => {
       try {
-        const imagesData = {};
-        for (const topic of topics) {
-          const requestUrl = `${BASE_URL}?key=${API_KEY}&q=${encodeURIComponent(
-            topic
-          )}&image_type=photo`;
-
-          console.log(`Fetching: ${requestUrl}`);
-          const response = await fetch(requestUrl);
-
-          if (!response.ok) {
-            console.error(`API Error ${response.status}`);
-            continue;
-          }
-
-          const data = await response.json();
-          imagesData[topic] =
-            data.hits && data.hits.length > 0
-              ? data.hits[0].webformatURL
-              : "/fallback.jpg";
-        }
-        setImages(imagesData);
+        const result = await Promise.all(topics.map(fetchImage));
+        setImages(Object.fromEntries(result));
       } catch (error) {
         console.error("Error fetching images:", error);
       }
     };
-
     fetchImages();
   }, []);
 
@@ -118,7 +106,7 @@ export const HomeComp2 = () => {
           </div>
         ))}
       </div>
-      <div class="flex items-center absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-white/90 to-transparent mask mask-linear p-20">
+      <div className="flex items-center absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-white/90 to-transparent mask mask-linear p-20">
         <Link
           to="/explore"
           className="bg-transparent border-2 border-black rounded-full p-2 text-lg mx-auto text-black "

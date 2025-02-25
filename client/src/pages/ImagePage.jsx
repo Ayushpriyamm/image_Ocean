@@ -12,15 +12,8 @@ export const ImagePage = () => {
   const params = useParams();
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isLoading, setIsLoading] = useState(true);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [relatedImage, setRelatedImage] = useState([]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, []);
 
   useEffect(() => {
     const fetchImage = async () => {
@@ -85,7 +78,7 @@ export const ImagePage = () => {
     }
   };
 
-  if (loading || isLoading) {
+  if (loading) {
     return <Loader />;
   }
 

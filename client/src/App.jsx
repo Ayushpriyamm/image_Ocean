@@ -11,6 +11,7 @@ import { Loader } from "./components/Loader";
 
 import { ImagePage } from "./pages/ImagePage";
 import { Footer } from "./components/Footer";
+import { About } from "./pages/About";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -29,6 +30,7 @@ const App = () => {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/create" element={<Create />} />
         <Route path="/explore" element={<Explore />} />

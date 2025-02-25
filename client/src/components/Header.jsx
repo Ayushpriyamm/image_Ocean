@@ -59,8 +59,8 @@ export const Header = () => {
               Explore
             </li>
           </Link>
-          <Link to="/signin">
-            <li className=" text-slate-100 hover:underline">Signin</li>
+          <Link to="/about">
+            <li className=" text-slate-100 hover:underline">About</li>
           </Link>
         </ul>
       </div>

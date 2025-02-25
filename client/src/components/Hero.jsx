@@ -32,7 +32,6 @@ export const Hero = () => {
     fetchImages();
   }, []);
 
-  console.log(images);
   return (
     <div>
       <div className="flex flex-col md:flex-row justify-center space-x-6 space-y-6 p-4 items-center h-screen">
