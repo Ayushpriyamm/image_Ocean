@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Loader } from "../components/Loader";
 import { ImageSkeleton } from "../components/ImageSkeleton";
 import { FaEye, FaCloudDownloadAlt, FaHeart } from "react-icons/fa";
+import { ImageItem } from "../components/ImageItem";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -13,6 +14,7 @@ export const ImagePage = () => {
   const [loading, setLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [relatedImage, setRelatedImage] = useState([]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -31,7 +33,11 @@ export const ImagePage = () => {
 
         if (data.hits.length > 0) {
           setImage(data.hits[0]);
+          const rawTags = data.hits[0].tags; // Get the tags string
+          const tagsArray = rawTags.split(",").map((tag) => tag.trim()); // Convert to array and remove spaces
 
+          console.log(tagsArray[0]);
+          fetchRelatedImage(tagsArray[0]);
           setLoading(false);
         }
       } catch (error) {
@@ -41,9 +47,24 @@ export const ImagePage = () => {
     };
 
     fetchImage();
-  }, [params]);
+  }, [params.imageId]);
 
-  console.log(image);
+  const fetchRelatedImage = async (tags) => {
+    if (!tags) return;
+
+    try {
+      const relatedURL = `${BASE_URL}?key=${API_KEY}&q=${encodeURIComponent(
+        tags
+      )}&per_page=20`;
+
+      const response = await fetch(relatedURL);
+      const data = await response.json();
+
+      setRelatedImage(data.hits);
+    } catch (error) {
+      console.log("Error fetching relatesd images:", error);
+    }
+  };
 
   const handleLoadImage = () => {
     setImageLoaded(true);
@@ -139,12 +160,27 @@ export const ImagePage = () => {
 
           <div className="details flex flex-col text-center text-lg space-y-2">
             <p>Media type : {image.type}</p>
-            <p>
-              Image tags :{" [ "}
-              <span>{image.tags}</span>
-              {" ]"}
-            </p>
+            <p>Image tags: {image.tags ? `[ ${image.tags} ]` : "N/A"}</p>
           </div>
+        </div>
+      </div>
+      {/* Related Images Section */}
+      <div className="p-4">
+        <h3 className="text-lg font-semibold mb-4">Related Images</h3>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mx-auto justify-center place-items-center">
+          {relatedImage.length > 0 ? (
+            relatedImage.map((img) => (
+              <ImageItem
+                key={img.id}
+                img={img}
+                className="w-full h-40 object-cover rounded-lg shadow-md cursor-pointer"
+              />
+            ))
+          ) : (
+            <p className="text-center text-gray-500">
+              No related images found.
+            </p>
+          )}
         </div>
       </div>
     </>

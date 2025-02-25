@@ -61,7 +61,7 @@ export const Explore = () => {
           Images and Photos
         </h1>
       </div>
-      <div className="grid gird-cols-1 md:grid-cols-4  mx-auto space-y-4 md:space-x-2">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mx-auto justify-center place-items-center">
         {images.map((image) => (
           <ImageItem key={image.id} img={image} />
         ))}

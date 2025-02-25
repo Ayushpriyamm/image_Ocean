@@ -101,6 +101,8 @@ export const HomeComp2 = () => {
                 src={images[topic]}
                 alt={topic}
                 className="w-full h-full object-cover rounded-lg"
+                loading="lazy"
+                style={{ imageRendering: "auto" }}
               />
             ) : (
               <div className="flex items-center justify-center w-full h-40">
